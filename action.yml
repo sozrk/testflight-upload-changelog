@@ -1,0 +1,35 @@
+name: Upload Test Notes to TestFlight
+description: Uploads TestFlight test notes to a specific app version on App Store Connect
+author: sozrk
+
+branding:
+  icon: edit
+  color: white
+
+inputs:
+  api_issuer_id:
+    description: App Store Connect API issuer ID
+    required: true
+  api_key_id:
+    description: App Store Connect API key ID
+    required: true
+  api_private_key:
+    description: App Store Connect API private key, a PEM-encoded PKCS#8 string
+    required: true
+  bundle_id:
+    description: App's bundle ID e.g. com.example.app
+    required: true
+  app_version:
+    description: The version of the app to upload the release notes to
+    required: true
+  whats_new:
+    description: The release notes to upload
+    required: true
+  disable_default_timeout:
+    description: Disable the default 25-minute timeout for this action. If you want to set a custom timeout, set this to true and use the built-in field `timeout-minutes`.
+    required: false
+    default: "false"
+
+runs:
+  using: node20
+  main: dist/bundle.js
