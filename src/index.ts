@@ -38,6 +38,16 @@ async function main() {
   const auth = new BearerCredentialHandler(token);
   client = new HttpClient("appstore-connect-release-notes-action", [auth]);
 
+  // Refresh the token every 15 minutes
+  setInterval(
+    async () => {
+      core.info("Refreshing token");
+      const newToken = await generateToken(apiIssuerId, apiKeyId, apiPrivateKey);
+      auth.token = newToken;
+    },
+    15 * 60 * 1000
+  );
+
   const apps = await client.getJson<GenericResponse>(`${API_URL}/apps?filter[bundleId]=${bundleId}`);
   if (apps.result?.data[0] == undefined) {
     throw new Error("App not found");
@@ -48,8 +58,9 @@ async function main() {
   const parsedVersion = new Version(appVersion);
   const version = parsedVersion.number ?? parsedVersion.name;
   const preReleaseVersion = parsedVersion.name;
-  core.info(`${appVersion} -> ${version} (${preReleaseVersion})`);
+  core.info(`Version ${appVersion} -> Version ${version} (Pre-release ${preReleaseVersion})`);
 
+  core.info("Waiting for the build to appear in App Store Connect");
   const start = performance.now();
   let buildId: string | undefined;
   while (buildId == undefined) {
@@ -61,9 +72,9 @@ async function main() {
     if (buildId != undefined) {
       break;
     }
-    await sleep(60 * 1000);
+    await sleep(30 * 1000);
   }
-  core.info(`Build found in ${((performance.now() - start) / 1000).toFixed(2)}s`);
+  core.info(`Waiting for build took ${((performance.now() - start) / 1000).toFixed(2)}s`);
   core.debug(`Build ID: ${buildId}`);
 
   const localizations = await client.getJson<GenericResponse>(
