@@ -2,7 +2,7 @@
 
 This action uploads a changelog for an app build in TestFlight.
 
-The changelog will be visible to testers in the TestFlight app on iOS.
+The changelog will be visible to testers in the TestFlight app.
 
 # Usage
 
@@ -21,7 +21,7 @@ The changelog will be visible to testers in the TestFlight app on iOS.
 
 # Timeout
 
-By default, if the action takes more than 25 minutes, it will be cancelled. You can change this by setting the `disable_default_timeout` input to true:
+By default, if the action takes more than 25 minutes, it will timeout internally. You can change this by setting the `disable_default_timeout` input to true:
 
 ```yaml
 - uses: sozrk/testflight-upload-changelog@v1
