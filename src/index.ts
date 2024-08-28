@@ -110,7 +110,7 @@ async function generateToken(issuerId: string, keyId: string, privateKey: string
   const cleanedKey = privateKey.includes("BEGIN PRIVATE KEY")
     ? privateKey
     : Buffer.from(privateKey, "base64").toString("utf8");
-  const signingKey = await jose.importPKCS8(privateKey, alg);
+  const signingKey = await jose.importPKCS8(cleanedKey, alg);
 
   const jwt = await new jose.SignJWT()
     .setProtectedHeader({ alg, kid: keyId })
