@@ -107,6 +107,9 @@ async function main() {
 
 async function generateToken(issuerId: string, keyId: string, privateKey: string): Promise<string> {
   const alg = "ES256";
+  const cleanedKey = privateKey.includes("BEGIN PRIVATE KEY")
+    ? privateKey
+    : Buffer.from(privateKey, "base64").toString("utf8");
   const signingKey = await jose.importPKCS8(privateKey, alg);
 
   const jwt = await new jose.SignJWT()

@@ -11,6 +11,7 @@ The changelog will be visible to testers in the TestFlight app.
   with:
     api_issuer_id: ${{ secrets.APPSTORE_ISSUER_ID }}
     api_key_id: ${{ secrets.APPSTORE_API_KEY_ID }}
+    # The private key must be a PEM-encoded PKCS#8 key. It can either be additionally base64-encoded or not.
     api_private_key: ${{ secrets.APPSTORE_API_PRIVATE_KEY }}
     bundle_id: com.example.app
     app_version: 1.0.0
