@@ -1,25 +1,24 @@
 {
-  "name": "testflight-upload-changelog",
-  "version": "1.0.0",
-  "author": "",
-  "description": "",
+  "type": "module",
   "scripts": {
     "start": "tsx src/index.ts",
     "watch": "tsx --watch src/index.ts",
-    "test": "tsx src/version.test.ts",
-    "bundle": "esbuild src/index.ts --bundle --outfile=dist/bundle.js --platform=node --sourcemap --minify",
-    "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "test": "tsx --test src/*.test.ts",
+    "bundle": "esbuild src/index.ts --bundle --outfile=dist/bundle.cjs --format=cjs --platform=node --target=node20 --sourcemap --minify --tree-shaking=true",
+    "format": "biome format --write",
+    "lint": "biome lint --write",
+    "check": "biome check"
   },
   "dependencies": {
-    "@actions/core": "^1.10.1",
-    "@actions/http-client": "^2.2.2",
-    "jose": "^5.7.0"
+    "@actions/core": "^1.11.1",
+    "@actions/http-client": "^2.2.3",
+    "jose": "^6.0.10"
   },
   "devDependencies": {
-    "@types/node": "^22.5.0",
-    "prettier": "^3.3.3",
-    "tsx": "^4.17.0",
-    "typescript": "^5.5.4"
+    "@biomejs/biome": "^1.9.4",
+    "@types/node": "^20",
+    "esbuild": "^0.25.3",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
   }
 }

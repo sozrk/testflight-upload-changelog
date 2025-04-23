@@ -7,6 +7,10 @@
 // App Store Connect). That also means the build metadata must be in the format
 // of 1, 2 or 3 period-separated integers.
 // https://github.com/flutter/flutter/blob/aa934ac119d007ad2e9dac7dbd75e41c1ee17ac8/packages/flutter_tools/lib/src/flutter_manifest.dart#L115-L133
+
+const semverRegex =
+  /^(?<main>\d+(?:\.\d+)?(?:\.\d+)?)(-[0-9a-zA-Z-]*(?:\.[0-9a-zA-Z-]*)*)?(?:\+(?<build>\d+(?:\.\d+)?(?:\.\d+)?))?$/;
+
 class Version {
   input: string;
   name: string;
@@ -14,10 +18,8 @@ class Version {
 
   constructor(version: string) {
     // allow leading zeroes like in semver 2.0.0-rc.1
-    const semverRegex =
-      /^(?<main>\d+(?:\.\d+)?(?:\.\d+)?)(-[0-9a-zA-Z-]*(?:\.[0-9a-zA-Z-]*)*)?(?:\+(?<build>\d+(?:\.\d+)?(?:\.\d+)?))?$/;
     const match = semverRegex.exec(version.trim());
-    if (match == null || match.groups == undefined) {
+    if (match == null || match.groups == null) {
       throw new Error(`Invalid version: ${version}`);
     }
 

@@ -29,7 +29,11 @@ inputs:
     description: Disable the default 25-minute timeout for this action. If you want to set a custom timeout, set this to true and use the built-in field `timeout-minutes`.
     required: false
     default: "false"
+  auto_fix_content:
+    description: Automatically fix issues in the release notes. Remove incorrect characters (emojis) and ensure maximum length is not exceeded.
+    required: false
+    default: "true"
 
 runs:
   using: node20
-  main: dist/bundle.js
+  main: dist/bundle.cjs

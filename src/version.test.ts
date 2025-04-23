@@ -1,6 +1,6 @@
-import assert from "node:assert";
+import assert from "node:assert/strict";
 import test, { describe } from "node:test";
-import { Version } from "./version";
+import { Version } from "./version.js";
 
 describe("Vesion constructor", () => {
   test("valid versions", () => {
